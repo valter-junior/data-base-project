@@ -1,4 +1,3 @@
-
 CREATE TABLE CRACHA (
   num_cracha NUMBER(4),
   data_emissao DATE,
@@ -15,7 +14,7 @@ CREATE TABLE USUARIO (
   CONSTRAINT FK_USU_CRA FOREIGN KEY (num_cracha) REFERENCES CRACHA (num_cracha)
 );
 
-CREATE TABLE TELEFONE (
+CREATE TABLE TELEFONES (
   matricula VARCHAR2(10),
   telefone VARCHAR2(20),
   CONSTRAINT PK_TELEFONES PRIMARY KEY (matricula, telefone),
@@ -29,11 +28,24 @@ CREATE TABLE AGENDAMENTO (
   CONSTRAINT PK_AGENDAMENTO PRIMARY KEY (cod_agend)
 );
 
+CREATE TABLE EQUIPAMENTO (
+  id_equipamento NUMBER(4),
+  CONSTRAINT PK_EQUIPAMENTO PRIMARY KEY (id_equipamento)
+);
+
+CREATE TABLE PEÇA (
+  cod_peca NUMBER(4),
+  qtd NUMBER(4) NOT NULL,
+  CONSTRAINT PK_PEÇA PRIMARY KEY (cod_peca)
+);
+
 CREATE TABLE LABORATORIO (
   cod_lab NUMBER(4),
   endereco_num_sala VARCHAR2(50),
   endereco_predio VARCHAR2(50),
-  CONSTRAINT PK_LABORATORIO PRIMARY KEY (cod_lab)
+  id_equipamento NUMBER(4),
+  CONSTRAINT PK_LABORATORIO PRIMARY KEY (cod_lab),
+  CONSTRAINT FK_LABORATORIO FOREIGN KEY (id_equipamento) REFERENCES EQUIPAMENTO (id_equipamento)
 );
 
 CREATE TABLE VISITANTE (
@@ -46,11 +58,11 @@ CREATE TABLE VISITANTE (
 
 CREATE TABLE PROFESSOR (
   matricula VARCHAR2(10),
-  cadeira VARCHAR2(100),
-  prof_matricula VARCHAR2(10),
+  cadeiras VARCHAR2(100),
+  prof_coordenador VARCHAR2(10) NOT NULL,
   CONSTRAINT PK_PROFESSOR PRIMARY KEY (matricula),
   CONSTRAINT FK_PRO_USU FOREIGN KEY (matricula) REFERENCES USUARIO (matricula),
-  CONSTRAINT FK_PRO_PROF FOREIGN KEY (prof_matricula) REFERENCES PROFESSOR (matricula)
+  CONSTRAINT FK_PRO_PROF FOREIGN KEY (prof_coordenador) REFERENCES PROFESSOR (matricula)
 );
 
 CREATE TABLE ALUNO (
@@ -71,31 +83,31 @@ CREATE TABLE FUNCIONARIO_MANUTENCAO (
 
 CREATE TABLE MANUTENCAO (
   matricula VARCHAR2(10),
-  cod_lab NUMBER(4),
+  id_equipamento NUMBER(4),
   data_inicio_manutencao DATE,
   data_fim_manutencao DATE,
   descricao VARCHAR2(200),
-  CONSTRAINT PK_MANUTENCAO PRIMARY KEY (matricula, cod_lab),
-  CONSTRAINT FK_MANU_LAB FOREIGN KEY (cod_lab) REFERENCES LABORATORIO (cod_lab),
+  CONSTRAINT PK_MANUTENCAO PRIMARY KEY (matricula, id_equipamento),
+  CONSTRAINT FK_MANU_EQUIP FOREIGN KEY (id_equipamento) REFERENCES EQUIPAMENTO (id_equipamento),
   CONSTRAINT FK_MANU_FUNC_MANUT FOREIGN KEY (matricula) REFERENCES FUNCIONARIO_MANUTENCAO (matricula)
 );
 
--- CREATE TABLE COORDENA (
---     coordenado VARCHAR2(10),
---     coordenador VARCHAR2(10),
---     CONSTRAINT PK_COORDENADO PRIMARY KEY (coordenado),
---     CONSTRAINT FK_COORDENADO FOREIGN KEY (coordenado) REFERENCES PROFESSOR (matricula),
---     CONSTRAINT FK_COORDENADOR FOREIGN KEY (coordenador) REFERENCES PROFESSOR (matricula)
--- )
+-- Verificar como fazer referencia de (matricula, id_equipamento) de forma correta 
+CREATE TABLE TROCA (
+  matricula VARCHAR2(10),
+  id_equipamento NUMBER(4),
+  cod_peca NUMBER(4),
+  CONSTRAINT PK_TROCA PRIMARY KEY (matricula, id_equipamento, cod_peca),
+  CONSTRAINT FK_TROCA_MANU_MAT FOREIGN KEY (matricula, id_equipamento) REFERENCES MANUTENCAO (matricula, id_equipamento),
+  CONSTRAINT FK_TROCA_PECA FOREIGN KEY (cod_peca) REFERENCES PEÇA (cod_peca)
+);
 
--- CREATE TABLE ACESSA(
---     matricula VARCHAR2(10),
---     cod_agend VARCHAR2 (4),
---     cod_lab VARCHAR2(4),
---     CONSTRAINT PK_ACESSA PRIMARY KEY (cod_agend, cod_lab),
---     CONSTRAINT FK_ACESSA_COD_AGEND FOREIGN KEY (cod_agend) REFERENCES AGENDAMENTO (cod_agend),
---     CONSTRAINT FK_ACESSA_COD_LAB FOREIGN KEY (cod_lab) REFERENCES LABORATORIO (cod_lab),
---     CONSTRAINT FK_ACESSA_MATRICULA FOREIGN KEY (matricula) REFERENCES USUARIO (matricula)
--- )
-
-
+CREATE TABLE ACESSA(
+    matricula VARCHAR2(10) NOT NULL,
+    cod_agend NUMBER(4),
+    cod_lab NUMBER(4),
+    CONSTRAINT PK_ACESSA PRIMARY KEY (cod_agend, cod_lab),
+    CONSTRAINT FK_ACESSA_COD_AGEND FOREIGN KEY (cod_agend) REFERENCES AGENDAMENTO (cod_agend),
+    CONSTRAINT FK_ACESSA_COD_LAB FOREIGN KEY (cod_lab) REFERENCES LABORATORIO (cod_lab),
+    CONSTRAINT FK_ACESSA_MATRICULA FOREIGN KEY (matricula) REFERENCES USUARIO (matricula)
+);
