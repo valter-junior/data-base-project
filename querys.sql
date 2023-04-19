@@ -1,6 +1,13 @@
 -- Sub consulta e Consulta externa
 
-
+-- Deve-se mostrar o nome de todos os alunos que agendaram laboratórios na data 02-JAN-22
+SELECT U.NOME
+FROM USUARIO U INNER JOIN ACESSA A
+            ON U.MATRICULA = A.MATRICULA INNER JOIN AGENDAMENTO AG
+    	ON A.COD_AGEND = AG.COD_AGEND
+WHERE AG.DATA_INICIO = '02-JAN-22' AND U.MATRICULA IN (
+    	SELECT A.MATRICULA
+            FROM ALUNO A)
 
 -- Mostre os usuarios que levaram mais de um 1 visitante 
 SELECT U.NOME, COUNT(*)
