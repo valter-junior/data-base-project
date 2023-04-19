@@ -72,7 +72,10 @@ WHERE (M1.DATA_INICIO_MANUTENCAO, M1.DATA_FIM_MANUTENCAO) IN (
 -- FUNÇÕES/PROCEDIMENTOS
 
 -- Retorna a qauntidade total de Laboratórios
-DECLARE
+CREATE OR REPLACE
+PROCEDURE
+	exibir_qtd_lab
+IS 
 	qtdLab number; 
 BEGIN 
 	SELECT COUNT(COD_LAB) INTO qtdLab
@@ -80,12 +83,24 @@ BEGIN
 	DBMS_OUTPUT.PUT_LINE('Quantidade : '||qtdLab);
 END;
 
+BEGIN
+	exibir_qtd_lab;
+END;
+
 -- Remove da tabela Aluno o Miguel Diaz que tem como número de matricula 12360
-DECLARE
-codU ALUNO.MATRICULA%TYPE := 12360;
+CREATE OR REPLACE FUNCTION
+	remove_aluno(mat_aluno IN NUMBER);
+	RETURN VARCHAR(2)
+IS
+	codU ALUNO.MATRICULA%TYPE := 12360;
 BEGIN
 	DELETE FROM ALUNO
-	WHERE MATRICULA = codU;
+	WHERE MATRICULA = codU
+	RETURN 'Aluno removido';
+	
+EXCEPTION
+	WHEN NO_DATA_FOUND THEN
+	RETURN 'Aluno não foi encontrado';
 END;
 
 
