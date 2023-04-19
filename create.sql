@@ -5,7 +5,7 @@ CREATE TABLE CRACHA (
 );
 
 CREATE TABLE USUARIO (
-  matricula VARCHAR2(10),
+  matricula NUMBER(10),
   nome VARCHAR2(80) NOT NULL,
   email VARCHAR2(100) NOT NULL,
   senha VARCHAR2(100) NOT NULL,
@@ -15,7 +15,7 @@ CREATE TABLE USUARIO (
 );
 
 CREATE TABLE TELEFONES (
-  matricula VARCHAR2(10),
+  matricula NUMBER(10),
   telefone VARCHAR2(20),
   CONSTRAINT PK_TELEFONES PRIMARY KEY (matricula, telefone),
   CONSTRAINT FK_TEL_USU FOREIGN KEY (matricula) REFERENCES USUARIO (matricula)
@@ -49,7 +49,7 @@ CREATE TABLE LABORATORIO (
 );
 
 CREATE TABLE VISITANTE (
-  matricula VARCHAR2(10),
+  matricula NUMBER(10),
   id_visitante VARCHAR2(10),
   motivo_visita VARCHAR2(100),
   CONSTRAINT PK_VISITANTE PRIMARY KEY(matricula, id_visitante),
@@ -57,7 +57,7 @@ CREATE TABLE VISITANTE (
 );
 
 CREATE TABLE PROFESSOR (
-  matricula VARCHAR2(10),
+  matricula NUMBER(10),
   cadeiras VARCHAR2(100),
   prof_coordenador VARCHAR2(10) NOT NULL,
   CONSTRAINT PK_PROFESSOR PRIMARY KEY (matricula),
@@ -66,7 +66,7 @@ CREATE TABLE PROFESSOR (
 );
 
 CREATE TABLE ALUNO (
-  matricula VARCHAR2(10), 
+  matricula NUMBER(10), 
   periodo VARCHAR2(50),
   cadeira VARCHAR2(100),
   CONSTRAINT PK_ALUNO PRIMARY KEY (matricula),
@@ -74,7 +74,7 @@ CREATE TABLE ALUNO (
 );
 
 CREATE TABLE FUNCIONARIO_MANUTENCAO (
-  matricula VARCHAR2(10),  
+  matricula NUMBER(10),  
   salario NUMBER(4),
   num_carteira VARCHAR2(50),
   CONSTRAINT PK_FUNC_MANUT PRIMARY KEY (matricula),
@@ -82,7 +82,7 @@ CREATE TABLE FUNCIONARIO_MANUTENCAO (
 );
 
 CREATE TABLE MANUTENCAO (
-  matricula VARCHAR2(10),
+  matricula NUMBER(10),
   id_equipamento NUMBER(4),
   data_inicio_manutencao DATE,
   data_fim_manutencao DATE,
@@ -94,7 +94,7 @@ CREATE TABLE MANUTENCAO (
 
 -- Verificar como fazer referencia de (matricula, id_equipamento) de forma correta 
 CREATE TABLE TROCA (
-  matricula VARCHAR2(10),
+  matricula NUMBER(10),
   id_equipamento NUMBER(4),
   cod_peca NUMBER(4),
   CONSTRAINT PK_TROCA PRIMARY KEY (matricula, id_equipamento, cod_peca),
@@ -103,7 +103,7 @@ CREATE TABLE TROCA (
 );
 
 CREATE TABLE ACESSA(
-    matricula VARCHAR2(10) NOT NULL,
+    matricula NUMBER(10) NOT NULL,
     cod_agend NUMBER(4),
     cod_lab NUMBER(4),
     CONSTRAINT PK_ACESSA PRIMARY KEY (cod_agend, cod_lab),
