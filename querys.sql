@@ -41,3 +41,12 @@ WHERE NOT EXISTS (
     FROM VISITANTE V 
     WHERE V.MATRICULA = U.MATRICULA)
 ORDER BY U.NUM_CRACHA;
+
+-- Mostre o codigo das peça que tem mais ou um numero igual de peças que a media total de todos os tipos de peças 
+SELECT P.COD_PECA
+FROM PECA P
+WHERE P.QTD >= (SELECT AVG(QTD)
+    FROM PECA)
+    
+-- Mostre a matricula dos funcionários que começaram e terminaram uma manutenção no mesmo dia do funcionário com matricula 123456 
+
