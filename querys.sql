@@ -125,3 +125,51 @@ BEGIN
 	altera_email
 END;
 
+-- Deve-se mostrar os laboratórios disponíveis 
+CREATE OR REPLACE FUNCTION verificar_laboratorios_disponiveis (
+    p_data IN DATE
+)
+RETURN SYS_REFCURSOR
+IS
+    c_resultados SYS_REFCURSOR;
+BEGIN
+    OPEN c_resultados FOR
+        SELECT L.cod_lab, L.endereco_num_sala, L.endereco_predio,
+            CASE
+                WHEN EXISTS (
+                    SELECT *
+                    FROM ACESSA A
+                    INNER JOIN AGENDAMENTO AG ON A.cod_agend = AG.cod_agend
+                    WHERE A.cod_lab = L.cod_lab
+                    AND (
+                        AG.data_inicio BETWEEN p_data AND p_data+1
+                        OR AG.data_fim BETWEEN p_data AND p_data+1
+                        OR p_data BETWEEN AG.data_inicio AND AG.data_fim
+                        OR p_data+1 BETWEEN AG.data_inicio AND AG.data_fim
+                    )
+                ) THEN 'Laboratório indisponível para o período especificado.'
+                ELSE 'Laboratório disponível para o período especificado.'
+            END AS disponibilidade
+        FROM LABORATORIO L;
+
+    RETURN c_resultados;
+END;
+
+DECLARE
+    c SYS_REFCURSOR;
+    v_cod_lab LABORATORIO.cod_lab%TYPE;
+    v_endereco_num_sala LABORATORIO.endereco_num_sala%TYPE;
+    v_endereco_predio LABORATORIO.endereco_predio%TYPE;
+    v_disponibilidade VARCHAR2(100);
+BEGIN
+    c := verificar_laboratorios_disponiveis(TO_DATE('2022-01-02', 'YYYY-MM-DD'));
+    LOOP
+        FETCH c INTO v_cod_lab, v_endereco_num_sala, v_endereco_predio, v_disponibilidade;
+        EXIT WHEN c%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE
+            (v_cod_lab || ' - ' || v_endereco_num_sala || ', ' || v_endereco_predio || ' - ' || v_disponibilidade);
+    END LOOP;
+    CLOSE c;
+END;
+
+SELECT * FROM LABORATORIO L;
