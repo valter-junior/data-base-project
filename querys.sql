@@ -48,10 +48,11 @@ FROM PECA P
 WHERE P.QTD >= (SELECT AVG(QTD)
     FROM PECA)
     
--- Mostre a matricula dos alunos que cursam a mesma cadeira e estão no mesmo período do aluno com matricula
-SELECT A.MATRICULA 
-FROM ALUNO A
-WHERE (A.CADEIRA, A.PERIODO) = (
+-- Mostre a Nome dos alunos que cursam a mesma cadeira e estão no mesmo período do aluno com matricula
+SELECT U.NOME
+FROM ALUNO A, USUARIO U
+WHERE A.MATRICULA = U.MATRICULA AND
+    (A.CADEIRA, A.PERIODO) = (
     SELECT A1.CADEIRA, A1.PERIODO
     FROM ALUNO A1
     WHERE A1.MATRICULA = 12350
