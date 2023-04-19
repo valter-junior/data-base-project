@@ -1,6 +1,6 @@
 # data-base-project
 
-## Projeto da cadeira de Banco de dados 
+Projeto da cadeira de Banco de dados 
 
 Grupo: 
 Fernanda de Araújo Lima Pascoal,
