@@ -1,0 +1,1 @@
+-- Sub consulta e Consulta externa
