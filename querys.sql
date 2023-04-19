@@ -71,6 +71,15 @@ WHERE (M1.DATA_INICIO_MANUTENCAO, M1.DATA_FIM_MANUTENCAO) IN (
 
 -- FUNÇÕES/PROCEDIMENTOS
 
+-- Retorna a qauntidade total de Laboratórios
+DECLARE
+	qtdLab number; 
+BEGIN 
+	SELECT COUNT(COD_LAB) INTO qtdLab
+	FROM LABORATORIO;
+	DBMS_OUTPUT.PUT_LINE('Quantidade : '||qtdLab);
+END;
+
 -- Remove da tabela Aluno o Miguel Diaz que tem como número de matricula 12360
 DECLARE
 codU ALUNO.MATRICULA%TYPE := 12360;
@@ -89,3 +98,4 @@ BEGIN
 	WHERE MATRICULA = 12347;
 	COMMIT;
 END;
+
