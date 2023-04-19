@@ -11,9 +11,9 @@ WHERE AG.DATA_INICIO = '02-JAN-22' AND U.MATRICULA IN (
 
 -- Mostre os usuarios que levaram mais de um 1 visitante 
 SELECT U.NOME, COUNT(*)
-FROM USUARIO U INNER JOIN VISITANTE V ON U.MATRICULA = U.MATRICULA
+FROM USUARIO U INNER JOIN VISITANTE V ON U.MATRICULA = V.MATRICULA
 GROUP BY U.NOME
-HAVING COUNT(*) > 1
+HAVING COUNT(*) > 1 
 
 -- Mostre o Num_Sala dos laboratorios que nunca tiveram um agendamento
 SELECT L.NUM_SALA 
