@@ -49,4 +49,9 @@ WHERE P.QTD >= (SELECT AVG(QTD)
     FROM PECA)
     
 -- Mostre a matricula dos funcionários que começaram e terminaram uma manutenção no mesmo dia do funcionário com matricula 123456 
-
+SELECT MATRICULA
+FROM MANUTENCAO
+WHERE (DATE(DATA_INICIO_MANUTENCAO), DATE(DATA_FIM_MANUTENCAO)) IN (
+	SELECT DATE(DATA_INICIO_MANUTENCAO), DATE(DATA_FIM_MANUTENCAO)
+    FROM MANUTENCAO
+    WHERE MATRICULA = 123456);
