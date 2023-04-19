@@ -28,10 +28,11 @@ WHERE EXISTS (
     FROM VISITANTE V 
     WHERE V.MATRICULA = U.MATRICULA);
 
--- Mostre o nome e email dos usuários que nunca levaram algum visitante, não pode fazer a consulta com JOIN
-SELECT U.NOME, U.EMAIL
-FROM USUARIO U 
+-- Mostre o nome e o número do crachá dos usuários que nunca levaram algum visitante, não pode fazer a consulta com JOIN, e faça ordenado pelo número do cracha
+SELECT U.NOME, U.NUM_CRACHA
+FROM USUARIO U   
 WHERE NOT EXISTS (
 	SELECT * 
     FROM VISITANTE V 
-    WHERE V.MATRICULA = U.MATRICULA);
+    WHERE V.MATRICULA = U.MATRICULA)
+ORDER BY U.NUM_CRACHA;
