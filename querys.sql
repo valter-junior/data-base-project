@@ -87,30 +87,41 @@ BEGIN
 	exibir_qtd_lab;
 END;
 
--- Remove da tabela Aluno o Miguel Diaz que tem como número de matricula 12360
+-- Retorna qual o periodo em que um aluno está 
 CREATE OR REPLACE FUNCTION
-	remove_aluno(mat_aluno IN NUMBER);
-	RETURN VARCHAR(2)
+	mostra_periodo_aluno(codU IN NUMBER);
+	RETURN VARCHAR2
 IS
-	codU ALUNO.MATRICULA%TYPE := 12360;
+	v_periodo VARCHAR2(40);
 BEGIN
-	DELETE FROM ALUNO
+	SELECT PERIODO FROM ALUNO
 	WHERE MATRICULA = codU
-	RETURN 'Aluno removido';
+	RETURN v_periodo;
 	
 EXCEPTION
 	WHEN NO_DATA_FOUND THEN
 	RETURN 'Aluno não foi encontrado';
 END;
 
+BEGIN 
+	mostra_periodo_aluno(12360)
+END;
 
--- Altera o email do Usuario Gabriel Laroche co matricula 12347
+
+-- Altera o email do Usuario Gabriel Laroche com matricula 12347
+CREATE OR REPLACE
+PROCEDURE
+	altera_email
 DECLARE
-novo_email USUARIO.EMAIL%TYPE := 'glarocheborba@gmail.com';
+	novo_email USUARIO.EMAIL%TYPE := 'glarocheborba@gmail.com';
 BEGIN 
 	UPDATE USUARIO
 	SET EMAIL = novo_email
 	WHERE MATRICULA = 12347;
 	COMMIT;
+END;
+
+BEGIN 
+	altera_email
 END;
 
