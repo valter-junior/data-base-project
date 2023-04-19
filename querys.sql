@@ -1,4 +1,4 @@
--- Sub consulta e Consulta externa
+-- CONSULTAS SELECT 
 
 -- Mostre o nome e data emissão do cracha de todos os usuarios que são alunos e estão no segundo período
 SELECT U.NOME, C.DATA_EMISSAO
@@ -67,3 +67,14 @@ WHERE (M1.DATA_INICIO_MANUTENCAO, M1.DATA_FIM_MANUTENCAO) IN (
     FROM MANUTENCAO M2
     WHERE M2.MATRICULA = 12356
     AND M1.MATRICULA <> 12356);
+
+
+-- FUNÇÕES/PROCEDIMENTOS
+
+-- Remove da tabela Aluno o Miguel Diaz que tem como número de matricula 12360
+DECLARE
+codU ALUNO.MATRICULA%TYPE := 12360;
+BEGIN
+	DELETE FROM ALUNO
+	WHERE MATRICULA = codU;
+END;
