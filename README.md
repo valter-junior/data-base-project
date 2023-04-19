@@ -16,6 +16,7 @@ Nesse repositório tem:
 - script.sql - que tem o projeto lógico e o povoamento das tabelas
 - querys.sql - são as consultas feitas 
 - Slide - qu são os slides de apresentação do projeto 
-- Modelo Conceitual - que o modelo coceitual feito com a ferramenta da EER case 
+- Modelo Conceitual - um print do modelo coceitual feito com a ferramenta da EER case 
+- Projeto conceitual - é o modelo conceitual em formato do arquivo do ERR case (.err)
 - Modelo Lógico - que é o modelo lógico do projeto
 - Projeto BD Documento - é uma documentação com todo o projeto em pdf 
