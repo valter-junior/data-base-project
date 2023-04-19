@@ -22,8 +22,8 @@ HAVING COUNT(*) > 1;
 
 -- Mostre o Num_Sala dos laboratorios que nunca tiveram um agendamento
 SELECT L.ENDERECO_NUM_SALA 
-FROM LABORATORIO L LEFT JOIN ACESSA A ON L.COD_LAB = A.COD_LAB INNER JOIN AGENDAMENTO AG ON A.COD_AGEND = AG.COD_AGEND
-WHERE A.COD_LAB IS NULL AND AG.COD_AGEND IS NULL; 
+FROM LABORATORIO L LEFT JOIN ACESSA A ON L.COD_LAB = A.COD_LAB
+WHERE A.COD_LAB IS NULL; 
 
 -- Mostre o nome e email dos usuários que ja levaram algum visitante, não pode fazer a consulta com JOIN
 SELECT U.NOME, U.EMAIL
