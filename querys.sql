@@ -78,3 +78,14 @@ BEGIN
 	DELETE FROM ALUNO
 	WHERE MATRICULA = codU;
 END;
+
+
+-- Altera o email do Usuario Gabriel Laroche co matricula 12347
+DECLARE
+novo_email USUARIO.EMAIL%TYPE := 'glarocheborba@gmail.com';
+BEGIN 
+	UPDATE USUARIO
+	SET EMAIL = novo_email
+	WHERE MATRICULA = 12347;
+	COMMIT;
+END;
