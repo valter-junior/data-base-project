@@ -1,5 +1,10 @@
 -- Sub consulta e Consulta externa
 
+-- Mostre o nome e data emissão do cracha de todos os usuarios que são alunos e estão no segundo período
+SELECT U.NOME, C.DATA_EMISSAO
+FROM USUARIO U INNER JOIN CRACHA C ON U.NUM_CRACHA = C.NUM_CRACHA INNER JOIN ALUNO A ON U.MATRICULA = A.MATRICULA
+WHERE PERIODO = '2';
+
 -- Deve-se mostrar o nome de todos os alunos que agendaram laboratórios na data 02-JAN-22
 SELECT U.NOME
 FROM USUARIO U INNER JOIN ACESSA A
