@@ -88,41 +88,47 @@ BEGIN
 END;
 
 -- Retorna qual o periodo em que um aluno está 
-CREATE OR REPLACE FUNCTION
-	mostra_periodo_aluno(codU IN NUMBER);
+CREATE OR REPLACE FUNCTION 
+    mostra_periodo_aluno(codU IN NUMBER)
 	RETURN VARCHAR2
 IS
 	v_periodo VARCHAR2(40);
 BEGIN
-	SELECT PERIODO FROM ALUNO
-	WHERE MATRICULA = codU
-	RETURN v_periodo;
-	
+	SELECT PERIODO INTO v_periodo
+    FROM ALUNO
+	WHERE MATRICULA = codU;
+
+    RETURN v_periodo;
 EXCEPTION
 	WHEN NO_DATA_FOUND THEN
 	RETURN 'Aluno não foi encontrado';
 END;
 
+DECLARE 
+    periodo VARCHAR2(40);
 BEGIN 
-	mostra_periodo_aluno(12360)
+	periodo := mostra_periodo_aluno(12360);
+    DBMS_OUTPUT.PUT_LINE('Período : '||periodo);
 END;
 
 
--- Altera o email do Usuario Gabriel Laroche com matricula 12347
+-- Altera o email cadastrado de um usuário 
 CREATE OR REPLACE
 PROCEDURE
-	altera_email
-DECLARE
-	novo_email USUARIO.EMAIL%TYPE := 'glarocheborba@gmail.com';
+	altera_email(
+    codU NUMBER,
+    novo_email USUARIO.EMAIL%TYPE
+    )
+IS
 BEGIN 
 	UPDATE USUARIO
 	SET EMAIL = novo_email
-	WHERE MATRICULA = 12347;
+	WHERE MATRICULA = codU;
 	COMMIT;
 END;
 
 BEGIN 
-	altera_email
+	altera_email(1234, 'glarocheborba@gmail.com');
 END;
 
 -- Deve-se mostrar os laboratórios disponíveis 
