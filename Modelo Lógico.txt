@@ -1,0 +1,42 @@
+Projeto Lógico:
+
+cracha(num_cracha, data_emissao)
+
+usuario(matricula, nome!, email!, senha!, [num_cracha]!)
+telefone(matricula, telefone)
+matricula -> usuario(matricula)
+num_cracha -> cracha(num_cracha)
+
+agendamento (cod_agend, data_inicio, data_fim)
+
+laboratorio (cod_lab, endereco_num_sala, endereco_predio)
+equipamento(id_equipamento, cod_lab)
+cod_lab -> laboratório(cod_lab)
+
+peca(cod_peca, qtd)
+
+visitante (matricula, id_visitante, motivo_visita)
+matrícula -> usuário(matricula)
+
+professor(matricula, cadeiras, prof_coordenador!)
+matrícula -> usuario(matricula)
+prof_coordenador -> professor(matricula)
+
+aluno(matricula, periodo, cadeiras )
+matrícula -> usuario(matricula)
+
+funcionario_manuntencao(matricula, salário, num_carteira)
+matricula -> usuario(matrícula)
+
+manutencao(matricula, id_equipamento, data_inicio_manutencao, data_fim_manutencao, descricao)
+matricula -> funcionario_manuntencao(matricula)
+id_equipamento -> Equipamento(id_equipamento)
+
+troca(matricula, id_equipamento, cod_peca)
+matricula, id_equipamento -> manutencao(matricula, id_equipamento)
+cod_peca -> Peca(cod_peca)
+
+acessa(matrícula!, cod_agend, cod_lab)
+matrícula -> usuario(Matricula) 
+cod_agend -> agendamento(cod_agend)
+cod_lab -> laboratório(cod_lab)
